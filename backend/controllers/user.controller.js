@@ -25,19 +25,25 @@ export const updateProfile = async (req, res, next) => {
     next(err);
   }
 };
-
 export const changePassword = async (req, res, next) => {
   try {
     const { currentPassword, newPassword } = req.body;
-    const user = await User.findById(req.user.id);
+    // Use the method that includes password_hash
+    const user = await User.findByIdWithPassword(req.user.id);
+    if (!user)
+      return res
+        .status(HTTP_STATUS.NOT_FOUND)
+        .json({ message: "User not found" });
+
     const valid = await bcrypt.compare(currentPassword, user.password_hash);
     if (!valid)
       return res
         .status(HTTP_STATUS.UNAUTHORIZED)
         .json({ message: "Current password incorrect" });
+
     const newHash = await bcrypt.hash(newPassword, 10);
     await User.updatePassword(req.user.id, newHash);
-    res.json({ message: "Password changed" });
+    res.json({ message: "Password changed successfully" });
   } catch (err) {
     next(err);
   }
