@@ -1,0 +1,3 @@
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const toSnakeCase = (str) =>
+  str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
