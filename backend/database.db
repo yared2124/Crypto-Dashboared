@@ -1,0 +1,51 @@
+backend/
+├── config/                 # Configuration files (DB, env, etc.)
+│   ├── database.js         # MongoDB / PostgreSQL connection setup
+│   └── constants.js        # App-wide constants, status codes
+│
+├── models/                 # Data schema / model definitions
+│   ├── User.model.js
+│   ├── Coin.model.js
+│   └── Alert.model.js
+│
+├── controllers/            # Business logic & request handling
+│   ├── user.controller.js
+│   ├── crypto.controller.js
+│   └── alert.controller.js
+│
+├── views/                  # If you serve HTML (optional – for API backends, can be empty)
+│   └── (templates if any)
+│
+├── routes/                 # API route definitions
+│   ├── user.routes.js
+│   ├── crypto.routes.js
+│   └── alert.routes.js
+│
+├── services/               # External API calls, helper business logic
+│   ├── coingecko.service.js
+│   └── notification.service.js
+│
+├── middleware/             # Auth, validators, logging, error handlers
+│   ├── auth.middleware.js
+│   ├── validate.middleware.js
+│   └── error.middleware.js
+│
+├── utils/                  # Utility functions
+│   ├── formatters.js
+│   └── apiResponse.js
+│
+├── validations/            # Request validation schemas (Joi / Zod)
+│   ├── user.validation.js
+│   └── alert.validation.js
+│
+├── logs/                   # Application logs (ignored in git)
+│
+├── tests/                  # Unit & integration tests
+│   ├── controllers/
+│   └── models/
+│
+├── .env                    # Environment variables
+├── .gitignore
+├── package.json
+├── server.js               # App entry point (starts Express server)
+└── app.js                  # Express app configuration (middleware, routes)
