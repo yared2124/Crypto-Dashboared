@@ -14,6 +14,14 @@ export const User = {
     );
     return rows[0];
   },
+  // For password operations (includes password_hash)
+  async findByIdWithPassword(id) {
+    const [rows] = await pool.query(
+      "SELECT user_id, username, email, password_hash, created_at FROM Users WHERE user_id = ?",
+      [id],
+    );
+    return rows[0];
+  },
   async create({ username, email, password_hash }) {
     const [result] = await pool.query(
       "INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)",
