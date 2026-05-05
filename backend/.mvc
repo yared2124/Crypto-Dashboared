@@ -1,0 +1,58 @@
+backend/
+│
+├── config/
+│   ├── database.js               # MySQL connection pool (mysql2)
+│   └── constants.js              # HTTP status codes, roles, alert types
+│
+├── models/                       # Each model maps to a database table
+│   ├── User.model.js             → table: Users
+│   ├── Coin.model.js             → table: Cryptocurrencies  ✅ (as you asked)
+│   ├── CryptoPrice.model.js      → table: CryptoPrices
+│   ├── CryptoHistory.model.js    → table: CryptoHistory
+│   ├── Portfolio.model.js        → table: Portfolio
+│   ├── Alert.model.js            → table: Alerts
+│   ├── News.model.js             → table: News
+│   └── UserFavorite.model.js     → table: UserFavorites
+│
+├── controllers/
+│   ├── auth.controller.js        # register, login
+│   ├── user.controller.js        # profile, update, change password, favorites
+│   ├── crypto.controller.js      # live prices, global market, charts
+│   ├── portfolio.controller.js   # add holdings, get portfolio value + P&L
+│   ├── alert.controller.js       # create, list, delete price alerts
+│   └── news.controller.js        # fetch & return crypto news
+│
+├── routes/
+│   ├── auth.routes.js
+│   ├── user.routes.js
+│   ├── crypto.routes.js
+│   ├── portfolio.routes.js
+│   ├── alert.routes.js
+│   └── news.routes.js
+│
+├── middleware/
+│   ├── auth.middleware.js        # JWT verification
+│   ├── validate.middleware.js    # Joi request validation
+│   └── error.middleware.js       # global error handler
+│
+├── services/
+│   ├── coingecko.service.js      # fetch live prices, historical OHLCV
+│   ├── alert.service.js          # background cron job to check alerts
+│   └── news.service.js           # fetch news from external API
+│
+├── utils/
+│   ├── apiResponse.js            # standardized JSON responses
+│   ├── formatters.js             # format currency, percentages, dates
+│   └── helpers.js                # reusable helper functions
+│
+├── validations/                  # Joi schemas for request validation
+│   ├── auth.validation.js
+│   ├── user.validation.js
+│   ├── portfolio.validation.js
+│   └── alert.validation.js
+│
+├── .env                          # environment variables (PORT, DB, JWT, etc.)
+├── .gitignore
+├── package.json                  # dependencies (express, mysql2, jsonwebtoken, etc.)
+├── server.js                     # entry point + cron jobs (price refresh & alerts)
+└── app.js                        # express app configuration & route mounting
