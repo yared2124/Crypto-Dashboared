@@ -8,10 +8,13 @@ export const News = {
       [title, summary, source, url, imageUrl, publishedAt],
     );
   },
+
   async getLatest(limit = 20) {
+    // Ensure limit is an integer and use a placeholder
+    const intLimit = parseInt(limit, 10);
     const [rows] = await pool.query(
       "SELECT * FROM News ORDER BY published_at DESC LIMIT ?",
-      [limit],
+      [intLimit],
     );
     return rows;
   },
