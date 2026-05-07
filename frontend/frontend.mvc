@@ -1,0 +1,35 @@
+frontend/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── components/
+│   │   ├── Navbar.tsx
+│   │   ├── Login.tsx
+│   │   ├── Register.tsx
+│   │   ├── PriceTicker.tsx
+│   │   ├── PortfolioCards.tsx
+│   │   ├── CryptoChart.tsx
+│   │   ├── MarketTable.tsx
+│   │   ├── PortfolioPanel.tsx
+│   │   ├── AlertsPanel.tsx
+│   │   └── WatchlistPanel.tsx
+│   ├── context/
+│   │   └── AuthContext.tsx
+│   ├── services/
+│   │   └── api.ts
+│   ├── types/
+│   │   └── index.ts
+│   ├── App.tsx
+│   ├── index.tsx
+│   ├── index.css
+│   ├── react-app-env.d.ts
+│   └── setupTests.ts
+├── .env
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── tailwind.config.js
+├── postcss.config.js
+├── tsconfig.json
+└── README.md
