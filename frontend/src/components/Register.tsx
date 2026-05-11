@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
@@ -54,6 +55,14 @@ const Register: React.FC = () => {
             Register
           </button>
         </form>
+        <div className="mt-4 text-center">
+          <Link
+            to="/login"
+            className="text-cyan-400 hover:text-cyan-300 text-sm"
+          >
+            Already have an account? Login
+          </Link>
+        </div>
       </div>
     </div>
   );
