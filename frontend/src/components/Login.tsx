@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
@@ -48,6 +49,14 @@ const Login: React.FC = () => {
         <p className="mt-4 text-center text-sm text-gray-400">
           Demo: demo@example.com / password123
         </p>
+        <div className="mt-4 text-center">
+          <Link
+            to="/register"
+            className="text-cyan-400 hover:text-cyan-300 text-sm"
+          >
+            Don't have an account? Register
+          </Link>
+        </div>
       </div>
     </div>
   );
