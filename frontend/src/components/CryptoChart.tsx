@@ -94,9 +94,12 @@ const CryptoChart: React.FC = () => {
               borderColor: "#00d4ff",
               borderRadius: "12px",
             }}
-            formatter={(value: number | undefined) => {
-              if (value === undefined) return ["N/A", "Price"];
-              return [`$${value.toLocaleString()}`, "Price"];
+            formatter={(value: any) => {
+              if (value === undefined || value === null)
+                return ["N/A", "Price"];
+              const num = typeof value === "number" ? value : parseFloat(value);
+              if (isNaN(num)) return ["N/A", "Price"];
+              return [`$${num.toLocaleString()}`, "Price"];
             }}
           />
           <Area
