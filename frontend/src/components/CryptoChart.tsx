@@ -10,6 +10,7 @@ import {
   Tooltip,
   CartesianGrid,
 } from "recharts";
+import { AxiosResponse } from "axios";
 
 const CryptoChart: React.FC = () => {
   const [coins, setCoins] = useState<Coin[]>([]);
@@ -20,21 +21,23 @@ const CryptoChart: React.FC = () => {
   );
 
   useEffect(() => {
-    getCoinsList().then((res) => setCoins(res.data));
+    getCoinsList().then((res: AxiosResponse<Coin[]>) => setCoins(res.data));
   }, []);
 
   useEffect(() => {
     if (!selectedCoinId) return;
-    getCoinHistory(selectedCoinId, timeframe, 30).then((res) => {
-      const formatted = res.data.map((item: HistoricalCandle) => ({
-        date: new Date(item.date).toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        }),
-        price: item.close_price,
-      }));
-      setChartData(formatted);
-    });
+    getCoinHistory(selectedCoinId, timeframe, 30).then(
+      (res: AxiosResponse<HistoricalCandle[]>) => {
+        const formatted = res.data.map((item: HistoricalCandle) => ({
+          date: new Date(item.date).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+          }),
+          price: item.close_price,
+        }));
+        setChartData(formatted);
+      },
+    );
   }, [selectedCoinId, timeframe]);
 
   return (
@@ -82,7 +85,7 @@ const CryptoChart: React.FC = () => {
           <CartesianGrid strokeDasharray="3 3" stroke="#2d3a5e" />
           <XAxis dataKey="date" tick={{ fill: "#9ca3af", fontSize: 10 }} />
           <YAxis
-            tickFormatter={(v) => `$${v.toLocaleString()}`}
+            tickFormatter={(v: number) => `$${v.toLocaleString()}`}
             tick={{ fill: "#9ca3af" }}
           />
           <Tooltip
@@ -91,10 +94,10 @@ const CryptoChart: React.FC = () => {
               borderColor: "#00d4ff",
               borderRadius: "12px",
             }}
-            formatter={(value: number) => [
-              `$${value.toLocaleString()}`,
-              "Price",
-            ]}
+            formatter={(value: number | undefined) => {
+              if (value === undefined) return ["N/A", "Price"];
+              return [`$${value.toLocaleString()}`, "Price"];
+            }}
           />
           <Area
             type="monotone"
