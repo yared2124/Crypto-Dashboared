@@ -19,8 +19,9 @@ const Login: React.FC = () => {
   };
 
   const handleGoogleLogin = () => {
-    toast.error("Google login will be available soon (OAuth integration)");
+    window.location.href = "http://localhost:5000/api/auth/google";
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0f1e] via-[#0c1222] to-[#0a0f1e] p-4">
