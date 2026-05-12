@@ -11,6 +11,8 @@ import CryptoChart from "./components/CryptoChart";
 import MarketTable from "./components/MarketTable";
 import PortfolioPanel from "./components/PortfolioPanel";
 import AlertsPanel from "./components/AlertsPanel";
+import OAuthRedirect from "./components/OAuthRedirect";
+
 
 const Dashboard: React.FC = () => (
   <div className="max-w-7xl mx-auto p-4">
@@ -40,6 +42,8 @@ const AppRoutes: React.FC = () => {
         path="/"
         element={user ? <Dashboard /> : <Navigate to="/login" />}
       />
+      
+      <Route path="/oauth-redirect" element={<OAuthRedirect />} />;
     </Routes>
   );
 };
