@@ -14,6 +14,21 @@ export const User = {
     );
     return rows[0];
   },
+
+  async findByGoogleId(googleId) {
+    const [rows] = await pool.query("SELECT * FROM Users WHERE google_id = ?", [
+      googleId,
+    ]);
+    return rows[0];
+  },
+
+  async createOAuth({ google_id, username, email, name, avatar }) {
+    const [result] = await pool.query(
+      "INSERT INTO Users (username, email, password_hash, google_id, profile_picture_url) VALUES (?, ?, ?, ?, ?)",
+      [username, email, "", google_id, avatar],
+    );
+    return result.insertId;
+  },
   // For password operations (includes password_hash)
   async findByIdWithPassword(id) {
     const [rows] = await pool.query(
