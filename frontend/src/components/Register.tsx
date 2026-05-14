@@ -7,122 +7,201 @@ const Register: React.FC = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { register } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await register({ username, email, password });
       toast.success("Account created! You are now logged in.");
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleRegister = () => {
-    toast.error("Google registration will be available soon");
+    window.location.href = "http://localhost:5000/api/auth/google";
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.18),transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(139,92,246,0.16),transparent_22%),#0a0f1e] p-4 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 p-4 text-white overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-36 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-48 -left-28 w-96 h-96 bg-violet-500/18 rounded-full blur-3xl"></div>
+        <div className="absolute -top-40 -right-36 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-48 -left-28 w-96 h-96 bg-purple-500/12 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative w-full max-w-4xl">
-        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/80 shadow-[0_35px_120px_-35px_rgba(139,92,246,0.8)] backdrop-blur-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="hidden lg:block bg-slate-900/80 p-10">
-              <div className="relative h-full rounded-[1.5rem] border border-white/5 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.14),transparent_35%),radial-gradient(circle_at_bottom_left,_rgba(16,185,129,0.14),transparent_30%)] p-8">
-                <div className="space-y-6">
+        <div className="relative overflow-hidden rounded-3xl border border-slate-700/50 bg-gradient-to-br from-slate-900/80 to-slate-950/90 shadow-[0_35px_120px_-35px_rgba(139,92,246,0.5)] backdrop-blur-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
+            {/* Left Panel - Benefits */}
+            <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br from-slate-900/60 to-slate-950/80 p-12 border-r border-slate-700/50">
+              <div>
+                <div className="inline-flex items-center gap-2 mb-8">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center font-bold">
+                    ◈
+                  </div>
+                  <span className="text-xl font-bold text-white">NovaFi</span>
+                </div>
+
+                <div className="space-y-8">
                   <div>
-                    <span className="inline-flex items-center rounded-full bg-blue-500/10 px-3 py-1 text-sm text-blue-300 font-medium">
-                      Start your portfolio
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                      Get Started
                     </span>
-                  </div>
-                  <div>
-                    <h2 className="text-4xl font-semibold tracking-tight text-white">
-                      Create your account
+                    <h2 className="text-4xl font-bold tracking-tight text-white leading-tight">
+                      Join thousands of traders
                     </h2>
-                    <p className="mt-3 text-sm leading-6 text-slate-300">
-                      Build your crypto dashboard with secure sign-up and
-                      instant access to market insights.
-                    </p>
                   </div>
-                  <div className="space-y-4 text-sm text-slate-300">
-                    <div className="flex items-start gap-3">
-                      <span className="mt-1 text-cyan-300">•</span>
-                      <span>Track prices in real time.</span>
+
+                  <p className="text-base leading-7 text-slate-300">
+                    Create your free account and start managing your crypto
+                    portfolio with professional tools.
+                  </p>
+
+                  <div className="space-y-4 pt-4">
+                    <div className="flex items-start gap-4">
+                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg
+                          className="w-3 h-3 text-emerald-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={3}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-slate-300">
+                        Real-time price tracking
+                      </span>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <span className="mt-1 text-cyan-300">•</span>
-                      <span>Save your watchlist and alerts.</span>
+                    <div className="flex items-start gap-4">
+                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg
+                          className="w-3 h-3 text-emerald-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={3}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-slate-300">
+                        Smart price alerts
+                      </span>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <span className="mt-1 text-cyan-300">•</span>
-                      <span>Secure wallet-style verification later.</span>
+                    <div className="flex items-start gap-4">
+                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg
+                          className="w-3 h-3 text-emerald-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={3}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-slate-300">
+                        Portfolio analytics
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div className="text-xs text-slate-400 pt-8 border-t border-slate-700/50">
+                Fast Setup • Secure • Free
+              </div>
             </div>
 
-            <div className="p-8 md:p-10">
-              <div className="mb-8 text-center">
-                <p className="text-xs uppercase tracking-[0.35em] text-cyan-300/80">
-                  NovaFi Account
-                </p>
-                <h1 className="mt-4 text-3xl md:text-4xl font-semibold text-white">
-                  Join NovaFi Today
+            {/* Right Panel - Register Form */}
+            <div className="p-8 sm:p-10">
+              <div className="mb-8">
+                <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+                  Create Account
                 </h1>
-                <p className="mt-3 text-sm text-slate-400">
-                  Create your free account to manage crypto holdings and alerts.
+                <p className="text-sm text-slate-400">
+                  Join NovaFi to manage your crypto holdings
                 </p>
               </div>
 
-              <div className="mb-6 rounded-3xl border border-amber-500/20 bg-amber-500/10 px-5 py-4 text-sm text-amber-200">
-                🔒 KYC verification required for withdrawals above $10,000.
+              <div className="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 flex items-start gap-3 text-sm">
+                <svg
+                  className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4v2m0 0v2m0-6v-2m0-2h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span className="text-amber-100">
+                  KYC verification required for withdrawals above $10,000.
+                </span>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">
                     Username
                   </label>
                   <input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-sm text-white shadow-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                    className="w-full rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400 transition-all"
                     placeholder="johndoe"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">
                     Email Address
                   </label>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-sm text-white shadow-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                    className="w-full rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400 transition-all"
                     placeholder="you@example.com"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">
                     Password
                   </label>
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-sm text-white shadow-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                    className="w-full rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400 transition-all"
                     placeholder="••••••••"
                     required
                   />
@@ -130,9 +209,29 @@ const Register: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:from-cyan-400 hover:to-blue-400"
+                  disabled={loading}
+                  className="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition-all duration-200 mt-2"
                 >
-                  Create Account
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg
+                        className="w-4 h-4 animate-spin"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                        />
+                      </svg>
+                      Creating account...
+                    </span>
+                  ) : (
+                    "Create Account"
+                  )}
                 </button>
               </form>
 
@@ -140,8 +239,8 @@ const Register: React.FC = () => {
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-slate-700"></div>
                 </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="bg-slate-950 px-3 text-slate-400">
+                <div className="relative flex justify-center">
+                  <span className="bg-slate-950 px-3 text-xs font-medium text-slate-400">
                     Or sign up with
                   </span>
                 </div>
@@ -149,7 +248,7 @@ const Register: React.FC = () => {
 
               <button
                 onClick={handleGoogleRegister}
-                className="w-full flex items-center justify-center gap-3 rounded-2xl border border-slate-700 bg-white/5 px-4 py-3 text-sm text-slate-100 transition hover:bg-white/10"
+                className="w-full flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-800/30 hover:bg-slate-800/50 px-4 py-3 text-sm font-medium text-slate-100 transition-all"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none">
                   <path
@@ -177,7 +276,7 @@ const Register: React.FC = () => {
                   Already have an account?{" "}
                   <Link
                     to="/login"
-                    className="font-semibold text-cyan-300 transition hover:text-cyan-200"
+                    className="font-semibold text-cyan-400 hover:text-cyan-300 transition"
                   >
                     Sign in
                   </Link>
