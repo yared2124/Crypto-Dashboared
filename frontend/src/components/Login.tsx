@@ -6,15 +6,19 @@ import toast from "react-hot-toast";
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await login(email, password);
       toast.success("Logged in successfully!");
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -23,89 +27,155 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.18),transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(139,92,246,0.16),transparent_22%),#0a0f1e] p-4 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 p-4 text-white overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-36 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-48 -left-28 w-96 h-96 bg-violet-500/18 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative w-full max-w-4xl">
-        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/80 shadow-[0_35px_120px_-35px_rgba(14,165,233,0.8)] backdrop-blur-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="hidden lg:block bg-slate-900/80 p-10">
-              <div className="relative h-full rounded-[1.5rem] border border-white/5 bg-[radial-gradient(circle_at_top_right,_rgba(56,189,248,0.14),transparent_35%),radial-gradient(circle_at_bottom_left,_rgba(139,92,246,0.14),transparent_30%)] p-8">
-                <div className="space-y-6">
-                  <div>
-                    <span className="inline-flex items-center rounded-full bg-cyan-500/10 px-3 py-1 text-sm text-cyan-300 font-medium">
-                      Secure crypto login
-                    </span>
+        <div className="relative overflow-hidden rounded-3xl border border-slate-700/50 bg-gradient-to-br from-slate-900/80 to-slate-950/90 shadow-[0_35px_120px_-35px_rgba(14,165,233,0.5)] backdrop-blur-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
+            {/* Left Panel - Features */}
+            <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br from-slate-900/60 to-slate-950/80 p-12 border-r border-slate-700/50">
+              <div>
+                <div className="inline-flex items-center gap-2 mb-8">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center font-bold">
+                    ◈
                   </div>
+                  <span className="text-xl font-bold text-white">NovaFi</span>
+                </div>
+
+                <div className="space-y-8">
                   <div>
-                    <h2 className="text-4xl font-semibold tracking-tight text-white">
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-cyan-400 mb-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
+                      Secure Access
+                    </span>
+                    <h2 className="text-4xl font-bold tracking-tight text-white leading-tight">
                       Welcome back
                     </h2>
-                    <p className="mt-3 text-sm leading-6 text-slate-300">
-                      Access your portfolio, monitor market momentum, and stay
-                      ahead with real-time prices.
-                    </p>
                   </div>
-                  <div className="space-y-4 text-sm text-slate-300">
-                    <div className="flex items-start gap-3">
-                      <span className="mt-1 text-cyan-300">•</span>
-                      <span>Instant portfolio updates and alerts.</span>
+
+                  <p className="text-base leading-7 text-slate-300">
+                    Access your crypto portfolio, monitor real-time prices, and
+                    manage your alerts from anywhere.
+                  </p>
+
+                  <div className="space-y-4 pt-4">
+                    <div className="flex items-start gap-4">
+                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg
+                          className="w-3 h-3 text-emerald-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={3}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-slate-300">
+                        Instant portfolio updates
+                      </span>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <span className="mt-1 text-cyan-300">•</span>
-                      <span>Secure authentication with Google support.</span>
+                    <div className="flex items-start gap-4">
+                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg
+                          className="w-3 h-3 text-emerald-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={3}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-slate-300">
+                        Real-time price alerts
+                      </span>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <span className="mt-1 text-cyan-300">•</span>
-                      <span>
-                        Beautiful charts and market views in one place.
+                    <div className="flex items-start gap-4">
+                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg
+                          className="w-3 h-3 text-emerald-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={3}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-slate-300">
+                        Advanced charting tools
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div className="text-xs text-slate-400 pt-8 border-t border-slate-700/50">
+                Secure • Fast • Reliable
+              </div>
             </div>
 
-            <div className="p-8 md:p-10">
-              <div className="mb-8 text-center">
-                <p className="text-xs uppercase tracking-[0.35em] text-cyan-300/80">
-                  NovaFi Dashboard
-                </p>
-                <h1 className="mt-4 text-3xl md:text-4xl font-semibold text-white">
-                  Sign in to your account
+            {/* Right Panel - Login Form */}
+            <div className="p-8 sm:p-10">
+              <div className="mb-8">
+                <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+                  Sign In
                 </h1>
-                <p className="mt-3 text-sm text-slate-400">
-                  Securely manage your crypto portfolio and alerts.
+                <p className="text-sm text-slate-400">
+                  Enter your credentials to access your dashboard
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">
                     Email Address
                   </label>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-sm text-white shadow-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                    className="w-full rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400 transition-all"
                     placeholder="you@example.com"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Password
-                  </label>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-semibold text-slate-300">
+                      Password
+                    </label>
+                    <a
+                      href="#"
+                      className="text-xs text-cyan-400 hover:text-cyan-300"
+                    >
+                      Forgot?
+                    </a>
+                  </div>
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-sm text-white shadow-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                    className="w-full rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400 transition-all"
                     placeholder="••••••••"
                     required
                   />
@@ -113,9 +183,29 @@ const Login: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:from-cyan-400 hover:to-blue-400"
+                  disabled={loading}
+                  className="w-full rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition-all duration-200"
                 >
-                  Sign In
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg
+                        className="w-4 h-4 animate-spin"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                        />
+                      </svg>
+                      Signing in...
+                    </span>
+                  ) : (
+                    "Sign In"
+                  )}
                 </button>
               </form>
 
@@ -123,8 +213,8 @@ const Login: React.FC = () => {
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-slate-700"></div>
                 </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="bg-slate-950 px-3 text-slate-400">
+                <div className="relative flex justify-center">
+                  <span className="bg-slate-950 px-3 text-xs font-medium text-slate-400">
                     Or continue with
                   </span>
                 </div>
@@ -132,7 +222,7 @@ const Login: React.FC = () => {
 
               <button
                 onClick={handleGoogleLogin}
-                className="w-full flex items-center justify-center gap-3 rounded-2xl border border-slate-700 bg-white/5 px-4 py-3 text-sm text-slate-100 transition hover:bg-white/10"
+                className="w-full flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-800/30 hover:bg-slate-800/50 px-4 py-3 text-sm font-medium text-slate-100 transition-all"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none">
                   <path
@@ -152,7 +242,7 @@ const Login: React.FC = () => {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                <span>Sign in with Google</span>
+                <span>Continue with Google</span>
               </button>
 
               <div className="mt-6 text-center">
@@ -160,15 +250,11 @@ const Login: React.FC = () => {
                   Don't have an account?{" "}
                   <Link
                     to="/register"
-                    className="font-semibold text-cyan-300 transition hover:text-cyan-200"
+                    className="font-semibold text-cyan-400 hover:text-cyan-300 transition"
                   >
-                    Create account
+                    Create one
                   </Link>
                 </p>
-              </div>
-
-              <div className="mt-4 text-center text-xs text-slate-500">
-                Demo: demo@example.com / password123
               </div>
             </div>
           </div>
